@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Scratch 3.0
+Comment=
+Exec=/usr/bin/scratch-launcher
+Terminal=true
+Type=Application

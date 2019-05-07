@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cd ~/Scratch/scratch-desktop
+./scratch-desktop

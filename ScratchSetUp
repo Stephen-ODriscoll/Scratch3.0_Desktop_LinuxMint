@@ -1,0 +1,37 @@
+#!/bin/bash
+
+sudo apt-get update
+
+mkdir ~/Scratch
+cd ~/Scratch
+wget "https://downloads.scratch.mit.edu/desktop/Scratch%20Desktop%20Setup%201.2.0.exe"
+sudo apt-get install -y p7zip-full
+7z x Scratch\ Desktop\ Setup\ 1.2.0.exe
+cd \$PLUGINSDIR/
+7z x app-32.7z
+cd resources/
+file app.asar electron.asar static/
+
+cd ~
+sudo apt install -y npm
+npm install electron --save-dev
+ls ~/node_modules/electron/dist
+
+cd ~/Scratch
+cp -r ~/node_modules/electron/dist scratch-desktop
+cd scratch-desktop
+cp -r ~/Scratch/\$PLUGINSDIR/resources/{app.asar,static} resources/
+ln -s electron scratch-desktop
+
+cd "$(dirname "$0")"
+cp scratch3.desktop ~/Desktop
+sudo cp scratch-launcher /usr/bin
+sudo mkdir /usr/share/icons/scratch
+sudo cp icon.png /usr/share/icons/scratch
+
+cd ~/Desktop
+gvfs-set-attribute -t string scratch3.desktop metadata::custom-icon file:////usr/share/icons/scratch/icon.png
+mv scratch3.desktop scratch3_refresh.desktop
+mv scratch3_refresh.desktop scratch3.desktop
+echo "Done"
+
